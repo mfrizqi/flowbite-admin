@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { isLogin } from '../../../shared.svelte';
 	import { imagesPath } from '../../utils/variables';
 	import { Avatar, Dropdown, DropdownDivider, DropdownHeader, DropdownItem } from 'flowbite-svelte';
 
@@ -6,6 +7,10 @@
 	export let avatar: string = ''; // "neil-sims.png",
 	export let email: string = ''; // "neil.sims@flowbite.com",
 	
+	function signOut(){
+		isLogin.set(false);
+	}
+
 </script>
 
 <button class="ms-3 rounded-full ring-gray-400 focus:ring-4 dark:ring-gray-600">
@@ -20,7 +25,7 @@
 	<DropdownItem>Settings</DropdownItem>
 	<DropdownItem>Earnings</DropdownItem>
 	<DropdownDivider />
-	<DropdownItem>Sign out</DropdownItem>
+	<DropdownItem on:click={signOut}>Sign out</DropdownItem>
 </Dropdown>
 
 <!--

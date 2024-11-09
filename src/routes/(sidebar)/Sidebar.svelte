@@ -50,6 +50,7 @@
 
 	let posts = [
 		{ name: 'Dashboard', icon: ChartPieOutline, href: '/dashboard' },
+		{ name: 'Statistics', icon: TableColumnSolid, href: '/statistics' },
 		{
 			name: 'Layouts',
 			icon: TableColumnSolid,
@@ -163,7 +164,7 @@
 					{/if}
 				{/each}
 			</SidebarGroup>
-			<SidebarGroup ulClass={groupClass}>
+			<!-- <SidebarGroup ulClass={groupClass}>
 				{#each links as { label, href, icon } (label)}
 					<SidebarItem
 						{label}
@@ -175,7 +176,7 @@
 						<svelte:component this={icon} slot="icon" class={iconClass} />
 					</SidebarItem>
 				{/each}
-			</SidebarGroup>
+			</SidebarGroup> -->
 		</nav>
 	</SidebarWrapper>
 </Sidebar>

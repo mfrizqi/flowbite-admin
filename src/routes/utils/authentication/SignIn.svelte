@@ -26,10 +26,10 @@
 
 <main class={mainClass}>
 	<div class={mainDivClass}>
-		<a href={site.link} class={siteLinkClass}>
+		<!-- <a href={site.link} class={siteLinkClass}>
 			<img src={site.img} class={siteImgClass} alt={site.imgAlt} />
 			<span>{site.name}</span>
-		</a>
+		</a> -->
 		<!-- Card -->
 		<Card class="w-full" size="md" border={false}>
 			<h1 class={cardH1Class}>

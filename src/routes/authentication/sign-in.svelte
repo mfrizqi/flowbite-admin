@@ -2,6 +2,10 @@
 	import { Label, Input } from 'flowbite-svelte';
 	import SignIn from '../utils/authentication/SignIn.svelte';
   import MetaTag from '../utils/MetaTag.svelte';
+	import { goto } from '$app/navigation';
+
+	import { isLogin } from '../../shared.svelte.js';
+
 	let title = 'Sign in to platform';
 	let site = {
 		name: 'Flowbite',
@@ -26,6 +30,8 @@
 			data[key] = value;
 		}
 		console.log(data);
+		isLogin.set(true);
+		goto('/dashboard');
 	};
 
 	const path: string = '/authentication/sign-in';
