@@ -7,8 +7,15 @@
 	// const analyticsId = data.ANALYTICS_ID
 	const analyticsId = '';
 	import { isLogin } from '../shared.svelte.js';
+	import { goto } from '$app/navigation';
 
-	onMount(modeobserver);
+	onMount(() => {
+		modeobserver;
+
+		if(!$isLogin){
+			goto('/')
+		}
+	});
 </script>
 
 <!-- <Runatics {analyticsId} /> -->

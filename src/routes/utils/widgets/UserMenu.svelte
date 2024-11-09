@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { isLogin } from '../../../shared.svelte';
 	import { imagesPath } from '../../utils/variables';
 	import { Avatar, Dropdown, DropdownDivider, DropdownHeader, DropdownItem } from 'flowbite-svelte';
@@ -8,6 +9,7 @@
 	export let email: string = ''; // "neil.sims@flowbite.com",
 	
 	function signOut(){
+		goto('/');
 		isLogin.set(false);
 	}
 
