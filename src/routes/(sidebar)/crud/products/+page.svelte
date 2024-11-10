@@ -26,15 +26,16 @@
 	} from 'flowbite-svelte-icons';
 	import type { ComponentType } from 'svelte';
 	import { sineIn } from 'svelte/easing';
-	import Products from '../../../data/product.json';
 	import MetaTag from '../../../utils/MetaTag.svelte';
 	import Delete from './Delete.svelte';
-	import Product from './Product.svelte';
 	import StatisticsBadge from '../../../utils/dashboard/StatisticsBadge.svelte';
 	import Element from './Element.svelte';
 
+	import * as API_ELEMENT from '$lib/elements.js';
+
 	import { Alert } from 'flowbite-svelte';
 	import { alert } from '../../../../shared.svelte';
+	import { load } from './+page';
 
 	export let data;
 
@@ -42,20 +43,36 @@
 	let drawerComponent: ComponentType = Element; // drawer component
 	let itemData = {};
 
-	let fetching = false;
-
-	function handleFetch(ev: any) {
-		fetching = ev.detail.fetching;
-
-		setTimeout(() => {
-			alert.update({ ...$alert, show: false });
-		}, $alert.timer);
-	}
-
 	const toggle = (component: ComponentType, item: any = {}) => {
 		drawerComponent = component;
 		itemData = item;
 		hidden = !hidden;
+	};
+
+	let timer: any = null;
+
+	const handleFetch: any = async (event) => {
+		// event.detail => `new CustomEvent()`를 통해 이벤트를 초기화 할 때 전달 된 모든 데이터를 반환
+		console.log(event);
+
+		if (timer) {
+			window.clearTimeout(timer);
+		} else {
+			timer = setTimeout(() => {
+				alert.set({
+					show: false,
+					color: 'green',
+					message: '',
+					status: '',
+					timer: 3000
+				});
+			}, $alert.timer);
+		}
+		let chem_list = await API_ELEMENT.get()
+		console.log('chem_res:', chem_list);
+		console.log('data: ',data)
+		data.chem_list = JSON.parse(JSON.stringify(chem_list));
+		// data.chem_list = await JSON.parse(JSON.stringify(API_ELEMENT.get()))
 	};
 
 	const path: string = '/crud/products';
@@ -87,7 +104,7 @@
 		</Heading>
 
 		<Toolbar embedded class="w-full py-4 text-gray-500 dark:text-gray-400">
-			<Input placeholder="Search for elements" class="me-6 w-80 border xl:w-96" />
+			<!-- <Input placeholder="Search for elements" class="me-6 w-80 border xl:w-96" />
 			<ToolbarButton
 				color="dark"
 				class="m-0 rounded p-1 hover:bg-gray-100 focus:ring-0 dark:hover:bg-gray-700"
@@ -111,9 +128,9 @@
 				class="m-0 rounded p-1 hover:bg-gray-100 focus:ring-0 dark:hover:bg-gray-700"
 			>
 				<DotsVerticalOutline size="lg" />
-			</ToolbarButton>
+			</ToolbarButton> -->
 
-			<div slot="end" class="space-x-2">
+			<div class="space-x-2">
 				<Button class="whitespace-nowrap" on:click={() => toggle(Element)}>Add new element</Button>
 			</div>
 		</Toolbar>
@@ -151,8 +168,6 @@
 					<TableBodyCell class="p-4">
 						<StatisticsBadge state={element?.status} {dark} />
 					</TableBodyCell>
-					<!-- <TableBodyCell class="p-4">{product.price}</TableBodyCell>
-					<TableBodyCell class="p-4">{product.discount}</TableBodyCell> -->
 					<TableBodyCell colspan="2" class="space-x-2 text-right">
 						<Button size="sm" class="gap-2 px-3" on:click={() => toggle(Element, element)}>
 							<EditOutline size="sm" /> Update
@@ -172,6 +187,11 @@
 	</Table>
 </main>
 
+<!-- <Drawer placement="right" transitionType="fly" {transitionParams} bind:hidden on:afterFetch{handleFetch}>
+	<svelte:component this={drawerComponent} bind:hidden {itemData} on:afterFetch{handleFetch} />
+</Drawer> -->
+
 <Drawer placement="right" transitionType="fly" {transitionParams} bind:hidden>
-	<svelte:component this={drawerComponent} bind:hidden {itemData} on:fetch{handleFetch()} />
+	<svelte:component this={drawerComponent} bind:hidden {itemData} on:afterFetch={handleFetch} />
+	<!-- <Delete {itemData} bind:hidden on:afterFetch={handleFetch} /> -->
 </Drawer>

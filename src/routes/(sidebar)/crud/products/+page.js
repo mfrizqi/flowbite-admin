@@ -9,9 +9,6 @@ export const load = async ({ fetch, params }) => {
 
 	const element = JSON.parse(JSON.stringify(fetchData)).splice(0, 7)
 	let sevenElement = element.map((el) => { return (Math.ceil(el.amount * 0.001)) })
-	console.log(element)
-	console.log(sevenElement)
-
 	return {
 		chem_list: fetchData,
 	};

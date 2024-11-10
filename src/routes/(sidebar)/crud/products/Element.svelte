@@ -88,11 +88,10 @@
 					show: true,
 					color: 'green',
 					message: '',
-					status: 'Success Edit ' + res?.chemical.name,
+					status: 'Success add ' + res?.chemical.name,
 					timer: 1000
 				});
 			}
-			fetching = true;
 		} else {
 			const res: any = await API_ELEMENT.edit(req, itemData.id);
 			if (res) {
@@ -105,7 +104,6 @@
 					status: 'Success Edit ' + res?.chemical.name,
 					timer: 1000
 				});
-				fetching = true;
 			}
 		}
 	};

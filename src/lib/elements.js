@@ -5,6 +5,13 @@ let config = {
   'content-type':'application/json'
 };
 
+export const get = async() => {
+  config.method = 'GET'
+	const res = await fetch(url, config);
+  console.log(res);
+	return res.json();
+}
+
 export const remove = async(id) => {
   config.method = 'DELETE'
 	const res = await fetch(url+`/${id}`, config);

@@ -24,7 +24,8 @@
 				status: 'Success delete ' + item.chemical.name,
 				timer: 1000
 			});
-			dispatch('fetch', { fetching: true });
+			fetching = true
+			dispatch('afterFetch');
 		}
 	};
 </script>
