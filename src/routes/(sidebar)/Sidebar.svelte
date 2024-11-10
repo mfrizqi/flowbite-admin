@@ -15,6 +15,7 @@
 		ClipboardListSolid,
 		CogOutline,
 		FileChartBarSolid,
+		HomeSolid,
 		GithubSolid,
 		LayersSolid,
 		LifeSaverSolid,
@@ -49,16 +50,16 @@
 	});
 
 	let posts = [
-		{ name: 'Dashboard', icon: ChartPieOutline, href: '/dashboard' },
-		{ name: 'Statistics', icon: TableColumnSolid, href: '/statistics' },
-		{
-			name: 'Layouts',
-			icon: TableColumnSolid,
-			children: {
-				Stacked: '/layouts/stacked',
-				Sidebar: '/layouts/sidebar'
-			}
-		},
+		{ name: 'Dashboard', icon: HomeSolid, href: '/dashboard' },
+		{ name: 'Statistics', icon: ChartPieOutline, href: '/statistics' },
+		// {
+		// 	name: 'Layouts',
+		// 	icon: TableColumnSolid,
+		// 	children: {
+		// 		Stacked: '/layouts/stacked',
+		// 		Sidebar: '/layouts/sidebar'
+		// 	}
+		// },
 		{
 			name: 'CRUD',
 			icon: RectangleListSolid,
@@ -67,36 +68,36 @@
 				Users: '/crud/users'
 			}
 		},
-		{ name: 'Settings', icon: CogOutline, href: '/settings' },
-		{
-			name: 'Pages',
-			icon: FileChartBarSolid,
-			children: {
-				Pricing: '/pages/pricing',
-				Maintenance: '/errors/400',
-				'404 not found': '/errors/404',
-				'500 server error': '/errors/500'
-			}
-		},
-		{
-			name: 'Authenication',
-			icon: LockSolid,
-			children: {
-				'Sign in': '/authentication/sign-in',
-				'Sign up': '/authentication/sign-up',
-				'Forgot password': '/authentication/forgot-password',
-				'Reset password': '/authentication/reset-password',
-				'Profile lock': '/authentication/profile-lock'
-			}
-		},
-		{
-			name: 'Playground',
-			icon: WandMagicSparklesOutline,
-			children: {
-				Stacked: '/playground/stacked',
-				Sidebar: '/playground/sidebar'
-			}
-		}
+		// { name: 'Settings', icon: CogOutline, href: '/settings' },
+		// {
+		// 	name: 'Pages',
+		// 	icon: FileChartBarSolid,
+		// 	children: {
+		// 		Pricing: '/pages/pricing',
+		// 		Maintenance: '/errors/400',
+		// 		'404 not found': '/errors/404',
+		// 		'500 server error': '/errors/500'
+		// 	}
+		// },
+		// {
+		// 	name: 'Authenication',
+		// 	icon: LockSolid,
+		// 	children: {
+		// 		'Sign in': '/authentication/sign-in',
+		// 		'Sign up': '/authentication/sign-up',
+		// 		'Forgot password': '/authentication/forgot-password',
+		// 		'Reset password': '/authentication/reset-password',
+		// 		'Profile lock': '/authentication/profile-lock'
+		// 	}
+		// },
+		// {
+		// 	name: 'Playground',
+		// 	icon: WandMagicSparklesOutline,
+		// 	children: {
+		// 		Stacked: '/playground/stacked',
+		// 		Sidebar: '/playground/sidebar'
+		// 	}
+		// }
 	];
 
 	let links = [

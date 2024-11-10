@@ -58,13 +58,13 @@
 			</NavUl>
 		{:else}
 			<form>
-				<Search size="md" class="mt-1 w-96 border focus:outline-none" />
+				<!-- <Search size="md" class="mt-1 w-96 border focus:outline-none" /> -->
 			</form>
 		{/if}
 	</div>
 	<div class="ms-auto flex items-center text-gray-500 dark:text-gray-400 sm:order-2">
 		<Notifications />
-		<AppsMenu />
+		<!-- <AppsMenu /> -->
 		<!-- <DarkMode /> -->
 		<UserMenu {...Users[4]} />
 	</div>

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import Statistics from '../../utils/dashboard/Statistics.svelte';
 	import MetaTag from '../../utils/MetaTag.svelte';
 	import Footer from '../Footer.svelte';

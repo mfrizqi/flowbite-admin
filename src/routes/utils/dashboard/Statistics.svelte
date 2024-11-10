@@ -15,15 +15,29 @@
 	import Insights from './Insights.svelte';
 	import Traffic from './Traffic.svelte';
 	import Elements from './Elements.svelte';
+	import { derived } from 'svelte/store';
 
 	export let data: PageData;
 
 	let chartOptions = getChartOptions(false);
 	chartOptions.series = data.series;
+	if (chartOptions.chart.type) {
+		chartOptions.chart.type = 'bar';
+
+    const topSeven = data?.chem_list.splice(0,7)
+    const sevenNames = topSeven.map((el:any)=>{
+      return el.chemical.name
+    });
+
+    console.log('topSeven: ', topSeven)
+    console.log('sevenNames: ', sevenNames)
+
+		chartOptions.xaxis.categories = sevenNames
+	}
 
 	let dark = false;
 
-  console.log(data?.chem_list)
+	console.log(data?.chem_list);
 
 	function handler(ev: Event) {
 		if ('detail' in ev && typeof ev.detail === 'boolean') {
@@ -34,7 +48,7 @@
 	}
 
 	onMount(() => {
-    console.log(data)
+		console.log(data);
 		document.addEventListener('dark', handler);
 		return () => document.removeEventListener('dark', handler);
 	});
@@ -42,58 +56,8 @@
 
 <div class="mt-px space-y-4">
 	<div class="grid gap-4">
-		<div class="text-xl font-medium text-slate-600">Elements Summary</div>
+		<div class="text-xl font-medium text-slate-600">Elements Statistics</div>
 		<ChartWidget {chartOptions} title="$45,385" subtitle="Sales this week" />
-		<!-- <Stats /> -->
 	</div>
-	<!-- <div class="grid grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-3">
-    <Card horizontal class="items-center justify-between" size="xl">
-      <div class="w-full">
-        <p>New products</p>
-        <p class="text-2xl font-bold leading-none text-gray-900 dark:text-white sm:text-3xl">
-          2,340
-        </p>
-        <Change size="sm" value={12.5} since="Since last month" />
-      </div>
-      <Chart options={thickbars} class="w-full" />
-    </Card>
-    <Card horizontal class="items-center justify-between" size="xl">
-      <div class="w-full">
-        <p>Users</p>
-        <p class="text-2xl font-bold leading-none text-gray-900 dark:text-white sm:text-3xl">
-          4,420
-        </p>
-        <Change size="sm" value={-3.4} since="Since last month" />
-      </div>
-      <DarkChart configFunc={users} class="w-full" />
-    </Card>
-    <Card horizontal class="items-center justify-between" size="xl">
-      <div class="w-full">
-        <p>Users</p>
-        <p class="text-2xl font-bold leading-none text-gray-900 dark:text-white sm:text-3xl">
-          4,420
-        </p>
-        <Change size="sm" value={-3.4} since="Since last month" class="w-full" />
-      </div>
-      <DarkChart configFunc={(d) => {
-        const x = users(d);
-        if (x.plotOptions?.bar) {
-            x.plotOptions.bar.horizontal = true;
-        } else {
-            x.plotOptions = {
-                bar: {
-                    horizontal: true
-                }
-            };
-        }
-        return x;
-      }} class="w-full"/>
-    </Card>
-  </div> -->
-	<!-- <div class="grid grid-cols-1 gap-4 xl:grid-cols-2">
-		<DesktopPc />
-		<Traffic {dark} />
-	</div> -->
-
-  <Elements {dark} fetchData={data?.chem_list}/>
+	<Elements {dark} fetchData={data?.chem_list} />
 </div>
