@@ -57,7 +57,7 @@
 			icon: RectangleListSolid,
 			children: {
 				Elements: '/crud/products',
-				"Users (WIP)": '/'
+				"Researchers (WIP)": '/'
 			}
 		},
 	];

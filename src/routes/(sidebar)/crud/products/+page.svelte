@@ -1,6 +1,29 @@
 <script lang="ts">
-	import { Breadcrumb, BreadcrumbItem, Button, Checkbox, Drawer, Heading, Input, Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Toolbar, ToolbarButton } from 'flowbite-svelte';
-	import { CogSolid, DotsVerticalOutline, EditOutline, ExclamationCircleSolid, TrashBinSolid } from 'flowbite-svelte-icons';
+	import {
+		Breadcrumb,
+		BreadcrumbItem,
+		Button,
+		Checkbox,
+		Drawer,
+		Heading,
+		Input,
+		Table,
+		TableBody,
+		TableBodyCell,
+		TableBodyRow,
+		TableHead,
+		TableHeadCell,
+		Toolbar,
+		ToolbarButton
+	} from 'flowbite-svelte';
+	import {
+		CogSolid,
+		DotsVerticalOutline,
+		EditOutline,
+		ExclamationCircleSolid,
+		InfoCircleSolid,
+		TrashBinSolid
+	} from 'flowbite-svelte-icons';
 	import type { ComponentType } from 'svelte';
 	import { sineIn } from 'svelte/easing';
 	import Products from '../../../data/product.json';
@@ -10,18 +33,33 @@
 	import StatisticsBadge from '../../../utils/dashboard/StatisticsBadge.svelte';
 	import Element from './Element.svelte';
 
+	import { Alert } from 'flowbite-svelte';
+	import { alert } from '../../../../shared.svelte';
+
 	export let data;
 
 	let hidden: boolean = true; // modal control
 	let drawerComponent: ComponentType = Element; // drawer component
+	let itemData = {};
 
-	const toggle = (component: ComponentType) => {
+	let fetching = false;
+
+	function handleFetch(ev: any) {
+		fetching = ev.detail.fetching;
+
+		setTimeout(() => {
+			alert.update({ ...$alert, show: false });
+		}, $alert.timer);
+	}
+
+	const toggle = (component: ComponentType, item: any = {}) => {
 		drawerComponent = component;
+		itemData = item;
 		hidden = !hidden;
 	};
 
 	const path: string = '/crud/products';
-  	const description: string = 'CRUD Elements example - Flowbite Svelte Admin Dashboard';
+	const description: string = 'CRUD Elements example - Flowbite Svelte Admin Dashboard';
 	const title: string = 'Flowbite Svelte Admin Dashboard - CRUD Elements';
 	const subtitle: string = 'CRUD Elements';
 	let transitionParams = {
@@ -29,14 +67,13 @@
 		duration: 200,
 		easing: sineIn
 	};
-	
+
 	let dark = false;
 
-	const headers = ['Name', 'Units', 'Status',' ' ,' '];
+	const headers = ['Name', 'Units', 'Status', ' ', ' '];
 </script>
 
 <MetaTag {path} {description} {title} {subtitle} />
-
 
 <main class="relative h-full w-full overflow-y-auto bg-white dark:bg-gray-800">
 	<div class="p-4">
@@ -45,7 +82,7 @@
 			<BreadcrumbItem href="/crud/products">Manage</BreadcrumbItem>
 			<BreadcrumbItem>Elements</BreadcrumbItem>
 		</Breadcrumb>
-		<Heading tag="h1" class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
+		<Heading tag="h1" class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
 			All Registered Element
 		</Heading>
 
@@ -81,6 +118,14 @@
 			</div>
 		</Toolbar>
 	</div>
+
+	{#if $alert.show}
+		<Alert color="green" class="mb-4">
+			<InfoCircleSolid slot="icon" class="h-5 w-5" />
+			<span class="font-medium">{$alert.status}</span>
+		</Alert>
+	{/if}
+
 	<Table>
 		<TableHead class="border-y border-gray-200 bg-gray-100 dark:border-gray-700">
 			<TableHeadCell class="w-4 p-4"><Checkbox /></TableHeadCell>
@@ -102,17 +147,22 @@
 							</div>
 						</div>
 					</TableBodyCell>
-					<TableBodyCell class="p-4">{Math.ceil(element.amount * 0.001)}</TableBodyCell>
+					<TableBodyCell class="p-4">{Math.ceil(element.amount * 0.001)}gr</TableBodyCell>
 					<TableBodyCell class="p-4">
 						<StatisticsBadge state={element?.status} {dark} />
 					</TableBodyCell>
 					<!-- <TableBodyCell class="p-4">{product.price}</TableBodyCell>
 					<TableBodyCell class="p-4">{product.discount}</TableBodyCell> -->
-					<TableBodyCell class="space-x-2 text-right">
-						<Button size="sm" class="gap-2 px-3" on:click={() => toggle(Product)}>
+					<TableBodyCell colspan="2" class="space-x-2 text-right">
+						<Button size="sm" class="gap-2 px-3" on:click={() => toggle(Element, element)}>
 							<EditOutline size="sm" /> Update
 						</Button>
-						<Button color="red" size="sm" class="gap-2 px-3" on:click={() => toggle(Delete)}>
+						<Button
+							color="red"
+							size="sm"
+							class="gap-2 px-3"
+							on:click={() => toggle(Delete, element)}
+						>
 							<TrashBinSolid size="sm" /> Delete
 						</Button>
 					</TableBodyCell>
@@ -122,7 +172,6 @@
 	</Table>
 </main>
 
-
 <Drawer placement="right" transitionType="fly" {transitionParams} bind:hidden>
-	<svelte:component this={drawerComponent} bind:hidden />
+	<svelte:component this={drawerComponent} bind:hidden {itemData} on:fetch{handleFetch()} />
 </Drawer>
