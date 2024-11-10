@@ -13,14 +13,6 @@ export const load = async ({ fetch, params }) => {
 	console.log(sevenElement)
 
 	return {
-		series: [
-			{
-				name: 'Elements',
-				data: sevenElement,
-				color: '#EF562F'
-			},
-		],
 		chem_list: fetchData,
-		total_chem: sevenElement.reduce((a, b) => a + b, 0)
 	};
 }

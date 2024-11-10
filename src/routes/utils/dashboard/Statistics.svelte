@@ -7,7 +7,7 @@
 	import users from '../graphs/users';
 	import DarkChart from '../widgets/DarkChart.svelte';
 	import { onMount } from 'svelte';
-	import getChartOptions from '../../(sidebar)/dashboard/chart_options';
+	import getChartOptions from '../../(sidebar)/statistics/chart_options';
 	import ActivityList from './ActivityList.svelte';
 	import Change from './Change.svelte';
 	import Chat from './Chat.svelte';
@@ -24,7 +24,7 @@
 	if (chartOptions.chart.type) {
 		chartOptions.chart.type = 'bar';
 
-    const topSeven = data?.chem_list.splice(0,7)
+    const topSeven = JSON.parse(JSON.stringify(data?.chem_list)).splice(0,7)
     const sevenNames = topSeven.map((el:any)=>{
       return el.chemical.name
     });
@@ -36,8 +36,6 @@
 	}
 
 	let dark = false;
-
-	console.log(data?.chem_list);
 
 	function handler(ev: Event) {
 		if ('detail' in ev && typeof ev.detail === 'boolean') {
@@ -57,7 +55,7 @@
 <div class="mt-px space-y-4">
 	<div class="grid gap-4">
 		<div class="text-xl font-medium text-slate-600">Elements Statistics</div>
-		<ChartWidget {chartOptions} title="$45,385" subtitle="Sales this week" />
+		<ChartWidget {chartOptions} title={data.total_chem} subtitle="Accumulation element extractions this week" />
 	</div>
 	<Elements {dark} fetchData={data?.chem_list} />
 </div>

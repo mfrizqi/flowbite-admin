@@ -41,7 +41,7 @@ export default function getChartOptions(dark: boolean): ApexOptions {
       gradient: {
         shade: 'light',
         type: 'vertical',
-        shadeIntensity: 0.5,
+        shadeIntensity: 0,
         opacityFrom: mainChartColors.opacityFrom,
         opacityTo: mainChartColors.opacityTo,
         stops: [0, 100]
@@ -107,7 +107,7 @@ export default function getChartOptions(dark: boolean): ApexOptions {
           fontWeight: 500
         },
         formatter: function (value: number): string {
-          return '$' + value;
+          return value + 'gr';
         }
       }
     },

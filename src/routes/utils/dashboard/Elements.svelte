@@ -100,15 +100,7 @@
 						<TableBodyCell class="px-4 font-normal text-gray-500 dark:text-gray-400">
 							{data?.chemical.atomicNumber}
 						</TableBodyCell>
-						<TableBodyCell class="px-4">{data?.amount / 4}</TableBodyCell>
-						<!-- <TableBodyCell class="px-4 font-normal  text-gray-500 dark:text-gray-400">
-						{reference}
-					</TableBodyCell>
-					<TableBodyCell
-						class="flex items-center gap-2 px-4 font-normal  text-gray-500 dark:text-gray-400"
-					>
-						<CreditCard number={method} /> <span>••• {method}</span>
-					</TableBodyCell> -->
+						<TableBodyCell class="px-4">{Math.ceil(data?.amount * 0.001)}</TableBodyCell>
 						<TableBodyCell class="px-4 font-normal"
 							><StatisticsBadge state={data?.status} {dark} /></TableBodyCell
 						>
@@ -117,13 +109,12 @@
 			{/if}
 		</TableBody>
 	</Table>
-	<div class="-mb-1 flex items-center justify-between pt-3 sm:pt-6">
+	<!-- <div class="-mb-1 flex items-center justify-between pt-3 sm:pt-6">
 		<LastRange />
 		<a
 			href="#top"
 			class="inline-flex items-center rounded-lg p-1 text-xs font-medium uppercase text-primary-700 hover:bg-gray-100 sm:text-sm dark:text-primary-500 dark:hover:bg-gray-700"
 		>
-			<!-- Transactions report <ChevronRightOutline size="lg" /> -->
 		</a>
-	</div>
+	</div> -->
 </Card>

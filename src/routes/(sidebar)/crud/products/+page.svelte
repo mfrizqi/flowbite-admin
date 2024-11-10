@@ -7,6 +7,9 @@
 	import MetaTag from '../../../utils/MetaTag.svelte';
 	import Delete from './Delete.svelte';
 	import Product from './Product.svelte';
+	import StatisticsBadge from '../../../utils/dashboard/StatisticsBadge.svelte';
+
+	export let data;
 
 	let hidden: boolean = true; // modal control
 	let drawerComponent: ComponentType = Product; // drawer component
@@ -25,6 +28,10 @@
 		duration: 200,
 		easing: sineIn
 	};
+	
+	let dark = false;
+
+	const headers = ['Name', 'Units', 'Status',' ' ,' '];
 </script>
 
 <MetaTag {path} {description} {title} {subtitle} />
@@ -34,15 +41,15 @@
 	<div class="p-4">
 		<Breadcrumb class="mb-5">
 			<BreadcrumbItem home>Home</BreadcrumbItem>
-			<BreadcrumbItem href="/crud/products">E-commerce</BreadcrumbItem>
-			<BreadcrumbItem>Products</BreadcrumbItem>
+			<BreadcrumbItem href="/crud/products">Manage</BreadcrumbItem>
+			<BreadcrumbItem>Elements</BreadcrumbItem>
 		</Breadcrumb>
 		<Heading tag="h1" class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
-			All products
+			All Registered Element
 		</Heading>
 
 		<Toolbar embedded class="w-full py-4 text-gray-500 dark:text-gray-400">
-			<Input placeholder="Search for products" class="me-6 w-80 border xl:w-96" />
+			<Input placeholder="Search for elements" class="me-6 w-80 border xl:w-96" />
 			<ToolbarButton
 				color="dark"
 				class="m-0 rounded p-1 hover:bg-gray-100 focus:ring-0 dark:hover:bg-gray-700"
@@ -69,40 +76,38 @@
 			</ToolbarButton>
 
 			<div slot="end" class="space-x-2">
-				<Button class="whitespace-nowrap" on:click={() => toggle(Product)}>Add new product</Button>
+				<Button class="whitespace-nowrap" on:click={() => toggle(Product)}>Add new element</Button>
 			</div>
 		</Toolbar>
 	</div>
 	<Table>
 		<TableHead class="border-y border-gray-200 bg-gray-100 dark:border-gray-700">
 			<TableHeadCell class="w-4 p-4"><Checkbox /></TableHeadCell>
-			{#each ['Product Name', 'Technology', 'Description', 'ID', 'Price', 'Discount', 'Actions'] as title}
+			{#each headers as title}
 				<TableHeadCell class="ps-4 font-normal">{title}</TableHeadCell>
 			{/each}
 		</TableHead>
 		<TableBody>
-			{#each Products as product}
+			{#each data?.chem_list as element}
 				<TableBodyRow class="text-base">
 					<TableBodyCell class="w-4 p-4"><Checkbox /></TableBodyCell>
 					<TableBodyCell class="flex items-center space-x-6 whitespace-nowrap p-4">
 						<div class="text-sm font-normal text-gray-500 dark:text-gray-400">
 							<div class="text-base font-semibold text-gray-900 dark:text-white">
-								{product.name}
+								{element?.chemical.name}
 							</div>
 							<div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-								{product.category}
+								<b>{element?.chemical.symbol}</b> - <b>{element?.chemical.atomicNumber}</b>
 							</div>
 						</div>
 					</TableBodyCell>
-					<TableBodyCell class="p-4">{product.technology}</TableBodyCell>
-					<TableBodyCell
-						class="max-w-sm overflow-hidden truncate p-4 text-base font-normal text-gray-500 dark:text-gray-400 xl:max-w-xs"
-						>{product.description}</TableBodyCell
-					>
-					<TableBodyCell class="p-4">#{product.id}</TableBodyCell>
-					<TableBodyCell class="p-4">{product.price}</TableBodyCell>
-					<TableBodyCell class="p-4">{product.discount}</TableBodyCell>
-					<TableBodyCell class="space-x-2">
+					<TableBodyCell class="p-4">{Math.ceil(element.amount * 0.001)}</TableBodyCell>
+					<TableBodyCell class="p-4">
+						<StatisticsBadge state={element?.status} {dark} />
+					</TableBodyCell>
+					<!-- <TableBodyCell class="p-4">{product.price}</TableBodyCell>
+					<TableBodyCell class="p-4">{product.discount}</TableBodyCell> -->
+					<TableBodyCell class="space-x-2 text-right">
 						<Button size="sm" class="gap-2 px-3" on:click={() => toggle(Product)}>
 							<EditOutline size="sm" /> Update
 						</Button>
