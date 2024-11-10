@@ -8,11 +8,12 @@
 	import Delete from './Delete.svelte';
 	import Product from './Product.svelte';
 	import StatisticsBadge from '../../../utils/dashboard/StatisticsBadge.svelte';
+	import Element from './Element.svelte';
 
 	export let data;
 
 	let hidden: boolean = true; // modal control
-	let drawerComponent: ComponentType = Product; // drawer component
+	let drawerComponent: ComponentType = Element; // drawer component
 
 	const toggle = (component: ComponentType) => {
 		drawerComponent = component;
@@ -20,9 +21,9 @@
 	};
 
 	const path: string = '/crud/products';
-  	const description: string = 'CRUD products examaple - Flowbite Svelte Admin Dashboard';
-	const title: string = 'Flowbite Svelte Admin Dashboard - CRUD Products';
-	const subtitle: string = 'CRUD Products';
+  	const description: string = 'CRUD Elements example - Flowbite Svelte Admin Dashboard';
+	const title: string = 'Flowbite Svelte Admin Dashboard - CRUD Elements';
+	const subtitle: string = 'CRUD Elements';
 	let transitionParams = {
 		x: 320,
 		duration: 200,
@@ -76,7 +77,7 @@
 			</ToolbarButton>
 
 			<div slot="end" class="space-x-2">
-				<Button class="whitespace-nowrap" on:click={() => toggle(Product)}>Add new element</Button>
+				<Button class="whitespace-nowrap" on:click={() => toggle(Element)}>Add new element</Button>
 			</div>
 		</Toolbar>
 	</div>
@@ -112,7 +113,7 @@
 							<EditOutline size="sm" /> Update
 						</Button>
 						<Button color="red" size="sm" class="gap-2 px-3" on:click={() => toggle(Delete)}>
-							<TrashBinSolid size="sm" /> Delete item
+							<TrashBinSolid size="sm" /> Delete
 						</Button>
 					</TableBodyCell>
 				</TableBodyRow>
