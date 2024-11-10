@@ -14,7 +14,7 @@
 	import DesktopPc from './DesktopPc.svelte';
 	import Insights from './Insights.svelte';
 	import Traffic from './Traffic.svelte';
-	import Transactions from './Transactions.svelte';
+	import Elements from './Elements.svelte';
 
 	export let data: PageData;
 
@@ -22,6 +22,8 @@
 	chartOptions.series = data.series;
 
 	let dark = false;
+
+  console.log(data?.chem_list)
 
 	function handler(ev: Event) {
 		if ('detail' in ev && typeof ev.detail === 'boolean') {
@@ -32,6 +34,7 @@
 	}
 
 	onMount(() => {
+    console.log(data)
 		document.addEventListener('dark', handler);
 		return () => document.removeEventListener('dark', handler);
 	});
@@ -39,7 +42,7 @@
 
 <div class="mt-px space-y-4">
 	<div class="grid gap-4">
-		<div class="text-xl font-medium text-slate-600">Sales</div>
+		<div class="text-xl font-medium text-slate-600">Elements Summary</div>
 		<ChartWidget {chartOptions} title="$45,385" subtitle="Sales this week" />
 		<!-- <Stats /> -->
 	</div>
@@ -87,10 +90,10 @@
       }} class="w-full"/>
     </Card>
   </div> -->
-	<div class="grid grid-cols-1 gap-4 xl:grid-cols-2">
+	<!-- <div class="grid grid-cols-1 gap-4 xl:grid-cols-2">
 		<DesktopPc />
 		<Traffic {dark} />
-	</div>
+	</div> -->
 
-	<Transactions {dark} />
+  <Elements {dark} fetchData={data?.chem_list}/>
 </div>

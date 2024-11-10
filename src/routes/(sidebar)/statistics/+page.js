@@ -1,5 +1,12 @@
 /** @type {import('./$types').PageLoad} */
-export function load({ params }) {
+export const load = async({fetch, params }) => {
+	const headers = {
+		method: 'GET'
+	};
+	const url = 'https://673032d166e42ceaf15fa407.mockapi.io/chemicallist';
+	const res = await fetch(url,headers);
+	const fetchData = await res.json();
+	 
 	return {	
 		series: [
 			{
@@ -12,6 +19,7 @@ export function load({ params }) {
 				data: [6556, 6725, 6424, 6356, 6586, 6756, 6616],
 				color: '#FDBA8C'
 			}
-		]
+		],
+		chem_list: fetchData
 	};
 }

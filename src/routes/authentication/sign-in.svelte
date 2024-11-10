@@ -31,6 +31,7 @@
 		}
 		console.log(data);
 		isLogin.set(true);
+		localStorage.setItem("isLogin", true);
 		goto('/dashboard');
 	};
 

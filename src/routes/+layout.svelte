@@ -12,15 +12,16 @@
 	onMount(() => {
 		modeobserver;
 
-		if(!$isLogin){
+		const isLoginLocal = localStorage.getItem('isLogin')
+		if(!$isLogin || !isLoginLocal){
 			goto('/')
 		}
 	});
 </script>
 
 <!-- <Runatics {analyticsId} /> -->
-{#if !$isLogin}
-	<SignIn />
-{:else}
+<!-- {#if !$isLogin} -->
+	<!-- <SignIn /> -->
+<!-- {:else} -->
 	<slot />
-{/if}|
+<!-- {/if}| -->
