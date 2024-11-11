@@ -75,7 +75,7 @@
 		req.id = formLength + 1
 		req.chemical.symbol = item.symbol
 		req.chemical.name = item.name
-		req.atomicNumber = item.atomic_number
+		req.chemical.atomicNumber = item.atomic_number
 		req.amount = item.amount
 		req.status = item.status
 
