@@ -1,12 +1,16 @@
 const url = 'https://673032d166e42ceaf15fa407.mockapi.io/chemicallist';
 let config = {
-  headers:{},
+  headers:{
+    'Content-Type':'application/json'
+  },
   method: 'GET',
-  'content-type':'application/json'
 };
 
 export const get = async() => {
   config.method = 'GET'
+  if(config?.body){
+    delete config?.body;
+  }
 	const res = await fetch(url, config);
   console.log(res);
 	return res.json();

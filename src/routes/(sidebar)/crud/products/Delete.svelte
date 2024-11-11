@@ -22,7 +22,7 @@
 				color: 'green',
 				message: '',
 				status: 'Success delete ' + item.chemical.name,
-				timer: 1000
+				timer: 3000
 			});
 			fetching = true
 			dispatch('afterFetch');

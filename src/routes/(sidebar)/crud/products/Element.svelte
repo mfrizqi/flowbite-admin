@@ -3,6 +3,9 @@
 	import { CloseOutline } from 'flowbite-svelte-icons';
 	import * as API_ELEMENT from '$lib/elements.js';
 	import { alert } from '../../../../shared.svelte';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
 
 	export let hidden: boolean = true; // modal control
 	export let fetching: boolean = false;
@@ -47,14 +50,13 @@
 	const submitElement = async () => {
 		const item: any = {};
 		const req: any = {
-			id: 0,
 			chemical: {
 				symbol: '',
 				name: '',
 				atomicNumber: 0
 			},
 			amount: 0,
-			status: false,
+			status: false
 		};
 		const form = document.getElementById('element_form');
 
@@ -72,38 +74,42 @@
 			}
 		}
 
-		req.id = formLength + 1
-		req.chemical.symbol = item.symbol
-		req.chemical.name = item.name
-		req.chemical.atomicNumber = item.atomic_number
-		req.amount = item.amount
-		req.status = item.status
+		req.chemical.symbol = item.symbol;
+		req.chemical.name = item.name;
+		req.chemical.atomicNumber = item.atomic_number;
+		req.amount = item.amount;
+		req.status = item.status;
 
 		if (isAdd) {
 			const res: any = await API_ELEMENT.add(req);
-			if (res) {
+			const body = await res.json();
+			if (body) {
 				hidden = true;
 
 				alert.set({
 					show: true,
 					color: 'green',
 					message: '',
-					status: 'Success add ' + res?.chemical.name,
-					timer: 1000
+					status: 'Success add ' + body?.chemical?.name,
+					timer: 3000
 				});
+				dispatch('afterFetch');
 			}
 		} else {
 			const res: any = await API_ELEMENT.edit(req, itemData.id);
-			if (res) {
+			const body = await res.json();
+
+			if (body) {
 				hidden = true;
 
 				alert.set({
 					show: true,
 					color: 'green',
 					message: '',
-					status: 'Success Edit ' + res?.chemical.name,
-					timer: 1000
+					status: 'Success Edit to ' + body?.chemical?.name,
+					timer: 3000
 				});
+				dispatch('afterFetch');
 			}
 		}
 	};

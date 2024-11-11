@@ -57,6 +57,16 @@
 
 		if (timer) {
 			window.clearTimeout(timer);
+
+			timer = setTimeout(() => {
+				alert.set({
+					show: false,
+					color: 'green',
+					message: '',
+					status: '',
+					timer: 3000
+				});
+			}, $alert.timer);
 		} else {
 			timer = setTimeout(() => {
 				alert.set({
@@ -66,6 +76,8 @@
 					status: '',
 					timer: 3000
 				});
+
+				window.clearTimeout(timer)
 			}, $alert.timer);
 		}
 		let chem_list = await API_ELEMENT.get()
@@ -137,11 +149,20 @@
 	</div>
 
 	{#if $alert.show}
-		<Alert color="green" class="mb-4">
-			<InfoCircleSolid slot="icon" class="h-5 w-5" />
-			<span class="font-medium">{$alert.status}</span>
-		</Alert>
+		<div class="fixed" style="z-index: 49; top: 68px; width: 100%">
+			<Alert color={$alert.color} class="mb-4">
+				<InfoCircleSolid slot="icon" class="h-5 w-5" />
+				<span class="font-medium">{$alert.status}</span>
+			</Alert>
+		</div>
 	{/if}
+
+	<!-- <div class="fixed" style="z-index: 9999; top: 68px; width: 100%">
+	<Alert color={$alert.color} class="mb-4">
+		<InfoCircleSolid slot="icon" class="h-5 w-5" />
+		<span class="font-medium">{$alert.status}</span>
+	</Alert>
+</div> -->
 
 	<Table>
 		<TableHead class="border-y border-gray-200 bg-gray-100 dark:border-gray-700">
@@ -193,5 +214,4 @@
 
 <Drawer placement="right" transitionType="fly" {transitionParams} bind:hidden>
 	<svelte:component this={drawerComponent} bind:hidden {itemData} on:afterFetch={handleFetch} />
-	<!-- <Delete {itemData} bind:hidden on:afterFetch={handleFetch} /> -->
 </Drawer>
